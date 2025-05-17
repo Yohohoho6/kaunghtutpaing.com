@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Full Stack Developer Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    
+    /* Modern navbar style */
+    .navbar {
+      background-color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      z-index: 1030;
+    }
+
+    /* On scroll */
+    .navbar.scrolled {
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* Navbar link animations */
+    .navbar-nav .nav-link {
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    
+    .navbar.show .nav-link {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Delay for each nav item */
+    .navbar.show .nav-link:nth-child(1) { transition-delay: 0.1s; }
+    .navbar.show .nav-link:nth-child(2) { transition-delay: 0.2s; }
+    .navbar.show .nav-link:nth-child(3) { transition-delay: 0.3s; }
+    .navbar.show .nav-link:nth-child(4) { transition-delay: 0.4s; }
+
+    .hero {
+      background: #e9f5f2;
+      padding: 100px 20px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    .section {
+      padding: 10px 20px;
+      transition: all 0.4s ease-in-out;
+    }
+    .btn-custom {
+      background-color: #00c9a7;
+      color: white;
+      border: none;
+    }
+    .btn-custom:hover {
+      background-color: #00a68f;
+    }
+    footer {
+      background: #fff;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      box-shadow: 0 -1px 4px rgba(0,0,0,0.05);
+    }
+    .card {
+      border: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .text-blue {
+      color: #7595c9;
+    }
+    .progress-bar {
+      width: 0;
+      transition: width 1.5s ease-in-out;
+    }
+    .skills {
+      padding: 80px 20px;
+    }
+
+
+      /* Education & Experience Section */
+  #education-exp {
+    padding: 80px 20px;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 20px;
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: 20px;
+  }
+
+  .timeline-bullet {
+    position: absolute;
+    left: -20px;
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    background-color: #00c9a7;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px #00c9a7;
+  }
+
+  .timeline-content {
+    padding-left: 15px;
+  }
+
+  .timeline-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: -16px;
+    top: 20px;
+    bottom: 0;
+    width: 2px;
+    background-color: #00c9a7;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+  }
+
+  .bg-primary {
+    background-color: #00c9a7!important;
+  }
+
+  .bg-success {
+    background-color: #7595c9!important;
+  }
+
+
+  /* Contact Section Styles */
+#contact {
+  padding: 10px 20px;
+}
+
+#contact .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+}
+
+#contact .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.contact-info h4 {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.contact-info h4::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 3px;
+  background-color: #00c9a7;
+}
+
+.form-floating label {
+  color: #6c757d;
+}
+
+.form-control {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px 15px;
+}
+
+.form-control:focus {
+  border-color: #00c9a7;
+  box-shadow: 0 0 0 0.25rem rgba(0, 201, 167, 0.25);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  #contact .card {
+    margin-bottom: 30px;
+  }
+  
+  .contact-info {
+    text-align: center !important;
+  }
+  
+  .contact-info h4::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+
+
+  /* Responsive adjustments */
+  @media (max-width: 992px) {
+    .timeline {
+      padding-left: 15px;
+    }
+    
+    .timeline-bullet {
+      left: -15px;
+    }
+    
+    .timeline-item:not(:last-child)::after {
+      left: -11px;
+    }
+  }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">Kaung Htut</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-expanded="false">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end pe-4" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#skill">Skill</a></li>
+        <li class="nav-item"><a class="nav-link" href="#services">Services & Education</a></li>
+        <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+      <a class="btn btn-custom ms-3" href="image/KaungHtutPaingCV (2).pdf" download>Download CV</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="container">
+      <div class="row justify-content-center align-items-center">
+        <!-- Image First on Mobile, Right on Desktop -->
+        <div class="col-md-6 order-1 order-md-2 text-center mb-4 mb-md-0">
+          <img src="image/profile.png" alt="Kaung Htut Profile" class="rounded-circle mx-auto d-block" width="250" height="250">
+        </div>
+        <!-- Text Second on Mobile, Left on Desktop -->
+        <div class="col-md-6 order-2 order-md-1 text-start">
+          <h1>Hello, I'm a Full Stack <br><span class="text-blue">Web Developer</span></h1>
+          <p>I'm Kaung Htut, a passionate Full Stack Developer with 2 years of experience. I love turning ideas into reality using code.</p>
+          
+          <!-- Social Icons -->
+          <div class="social-icons mb-3">
+            <a href="https://github.com/Yohohoho6" target="_blank" class="text-decoration-none text-blue me-3">
+              <i class="bi bi-github fs-3"></i>
+            </a>
+            <a href="https://facebook.com/yourprofile" target="_blank" class="text-decoration-none text-blue me-3">
+              <i class="bi bi-facebook fs-3"></i>
+            </a>
+            <a href="https://linkedin.com/in/yourprofile" target="_blank" class="text-decoration-none text-blue">
+              <i class="bi bi-linkedin fs-3"></i>
+            </a>
+          </div>
+          
+          <a href="#portfolio" class="btn btn-custom">View Portfolio</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<!-- About -->
+<section class="section" id="about">
+  <div class="container text-center">
+    <h2>About Me</h2>
+    <p class="mt-3" style="max-width: 700px; margin: auto;">
+      I'm currently attending my second year of the Diploma in Computing program by <b>NCC Education</b>. I've also completed a Professional Web Developer course from <b>Fair Way Technology</b>. My strengths lie in crafting robust backends and engaging frontends using modern technologies.In addition skill I accomplish <b>Advance Level</b> on Englist from IH Yangon.
+    </p>
+  </div>
+</section>
+
+<!-- Skills Section -->
+<section class="skills py-5 bg-light" id="skill">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">Language & Tech Skills</h2>
+      <p class="text-muted">My technical proficiency in web and mobile development</p>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <h6>HTML <span class="float-end">98%</span></h6>
+        <div class="progress mb-3">
+          <div class="progress-bar bg-success" role="progressbar" data-width="98%"></div>
+        </div>
+        <h6>CSS <span class="float-end">80%</span></h6>
+        <div class="progress mb-3">
+          <div class="progress-bar bg-info" role="progressbar" data-width="80%"></div>
+        </div>
+        <h6>JavaScript <span class="float-end">75%</span></h6>
+        <div class="progress mb-3">
+          <div class="progress-bar bg-warning" role="progressbar" data-width="75%"></div>
+        </div>
+        <h6>MySql <span class="float-end">70%</span></h6>
+        <div class="progress mb-3">
+          <div class="progress-bar bg-danger" role="progressbar" data-width="75%"></div>
+        </div>
+        
+      </div>
+      <div class="col-md-6">
+        <h6>Laravel <span class="float-end">75%</span></h6>
+        <div class="progress mb-3">
+          <div class="progress-bar bg-danger" role="progressbar" data-width="75%"></div>
+        </div>
+        <h6>Kotlin <span class="float-end">80%</span></h6>
+        <div class="progress mb-3">
+          <div class="progress-bar bg-primary" role="progressbar" data-width="80%"></div>
+        </div>
+        <h6>Git <span class="float-end">50%</span></h6>
+        <div class="progress mb-3">
+          <div class="progress-bar bg-secondary" role="progressbar" data-width="50%"></div>
+        </div>
+        
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="section bg-light" id="services">
+  <div class="container text-center">
+    <h2>Services</h2>
+    <div class="row mt-5">
+      <div class="col-md-4 mb-4">
+        <div class="card p-4 h-100">
+          <h5>Frontend Development</h5>
+          <p>Modern, responsive and user-friendly interfaces built with HTML, CSS, JavaScript, Bootstrap and React.</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card p-4 h-100">
+          <h5>Backend Development</h5>
+          <p>Secure and scalable server-side applications using Node.js, PHP, Laravel and databases like MySQL.</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card p-4 h-100">
+          <h5>Full Stack Solutions</h5>
+          <p>Complete web solutions from scratch — integrating frontend and backend for a seamless product.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Education & Experience Section -->
+  <section class="section bg-white" id="education-exp">
+    <div class="container">
+      <div class="row">
+        <!-- Left Column (Education) -->
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <h4 class="fw-bold mb-4 text-blue">KMD College & University Of Greenwich</h4>
+          
+          <div class="timeline">
+            <!-- Item 1 -->
+            <div class="timeline-item mb-4">
+              <div class="timeline-bullet"></div>
+              <div class="timeline-content ps-4">
+                <h5 class="fw-bold">Level 5 Diploma In Computing <span class="text-muted">(2025-Current)</span></h5>
+                <p class="text-muted mb-2">Currently pursuing advanced studies in computing with distinction grades across all subjects. Specializing in software development, database systems, and network security. Actively participating in coding competitions and academic research projects.</p>
+                <span class="badge bg-success">NCC Education - Level 5 Diploma In Computing</span>
+              </div>
+            </div>
+            
+            <!-- Item 2 -->
+            <div class="timeline-item mb-4">
+              <div class="timeline-bullet"></div>
+              <div class="timeline-content ps-4">
+                <h5 class="fw-bold">Level 4 Diploma In Computing <span class="text-muted">(2024-2025)</span></h5>
+                <p class="text-muted mb-2">Achieved outstanding results with 7 distinctions in Computer Networks, Database, Designing And Developing a Website, Designing and Developing Object-Oriented Computer Programs, Computer System, Office Solutions Development, Skills for Computing. Earned 1 merit in Software Development Techniques. Developed several practical projects including a student management system.</p>
+                <span class="badge bg-success">NCC Education - Level 4 Diploma In Computing</span>
+              </div>
+            </div>
+            
+            <!-- Item 3 -->
+            <div class="timeline-item">
+              <div class="timeline-bullet"></div>
+              <div class="timeline-content ps-4">
+                <h5 class="fw-bold">Level 3 Diploma In Computing  <span class="text-muted">(2023-2024)</span></h5>
+                <p class="text-muted mb-2">Completed with perfect distinction grades in all 5 subjects: Introduction to Computer Science, Culture Studies, Foundation Mathematics, Introduction To Programming and Study And Communication Skills. Recognized for excellent problem-solving abilities and project work.</p>
+                <span class="badge bg-success">NCC Education - Level 3 Diploma In Computing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right Column (Experience) -->
+        <div class="col-lg-6">
+          <h4 class="fw-bold mb-4 text-blue">International House Yangon - The SPACE & Other</h4>
+          
+          <div class="timeline">
+            <!-- Item 1 -->
+            <div class="timeline-item mb-4">
+              <div class="timeline-bullet"></div>
+              <div class="timeline-content ps-4">
+                <h5 class="fw-bold">Advance - C1 <span class="text-muted">(2025 - May)</span></h5>
+                <p class="text-muted mb-2">Achieved top marks in advanced English proficiency with excellent performance in academic writing, presentations, and critical analysis. Active participant in debates and discussion forums. Completed all coursework with distinction.</p>
+                <span class="badge bg-success">Diploma In General Englsih</span>
+              </div>
+            </div>
+            
+            <!-- Item 2 -->
+            <div class="timeline-item mb-4">
+              <div class="timeline-bullet"></div>
+              <div class="timeline-content ps-4">
+                <h5 class="fw-bold">Upper Intermediate - B2 <span class="text-muted">(June - 2024 December)</span></h5>
+                <p class="text-muted mb-2">Scored in the top 10% of the class with perfect attendance. Demonstrated strong communication skills through group projects and presentations. Received special recognition for vocabulary development.</p>
+                <span class="badge bg-success">Upper Intermediate Certificate</span>
+              </div>
+            </div>
+            
+            <!-- Item 3 -->
+            <div class="timeline-item mb-4">
+              <div class="timeline-bullet"></div>
+              <div class="timeline-content ps-4">
+                <h5 class="fw-bold">Intermediate - B1 <span class="text-muted">(January - 2026 June)</span></h5>
+                <p class="text-muted mb-2">Completed with high marks across all assessment criteria. Improved English proficiency from pre-intermediate to intermediate level within 6 months. Active participant in language immersion activities and cultural exchange programs.</p>
+                <span class="badge bg-success"> Intermediate Certificate</span>
+              </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="timeline-item mb-4">
+              <div class="timeline-bullet"></div>
+              <div class="timeline-content ps-4">
+                <h5 class="fw-bold">Fairway Technology <span class="text-muted">(2024-2025)</span></h5>
+                <p class="text-muted mb-2">Completed comprehensive training with perfect scores in all modules including HTML5, CSS3, JavaScript, PHP, Laravel and MySQL. Built multiple projects including e-commerce sites and content management systems. Received certification with distinction.</p>
+                <span class="badge bg-success">Professional Web Developer Certificate</span>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Portfolio -->
+<section class="section" id="portfolio">
+  <div class="container text-center">
+    <h2>My Projects</h2>
+    <div class="row mt-5">
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="image/standing_desk.png" class="card-img-top" alt="Project 1">
+          <div class="card-body">
+            <h5 class="card-title">E-commerce Website</h5>
+            <p class="card-text">An online shopping platform built using React, Node.js and MongoDB.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="image/fitnessApp.png" class="card-img-top" alt="Project 2">
+          <div class="card-body">
+            <h5 class="card-title">Fitness Tracker App</h5>
+            <p class="card-text">Android app for fitness logging, created with Kotlin and connected to a PHP backend.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="image/foodfusion.png" class="card-img-top" alt="Project 3">
+          <div class="card-body">
+            <h5 class="card-title">Portfolio Site</h5>
+            <p class="card-text">A responsive personal website built using Bootstrap and JavaScript.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="section bg-light" id="contact">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2>Contact Me</h2>
+      <p class="lead">Have a project in mind or just want to say hi? Let's connect!</p>
+    </div>
+    
+    <div class="row justify-content-center">
+      <!-- Contact Form -->
+      <div class="col-lg-7 col-md-8 mb-5 mb-lg-0">
+        <div class="card shadow-sm border-0">
+          <div class="card-body p-4 p-lg-5">
+            <form id="contactForm">
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div class="form-floating">
+                    <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                    <label for="name">Your Name</label>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                  <div class="form-floating">
+                    <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+                    <label for="email">Your Email</label>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-4">
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="subject" placeholder="Subject" required>
+                  <label for="subject">Subject</label>
+                </div>
+              </div>
+              <div class="mb-4">
+                <div class="form-floating">
+                  <textarea class="form-control" id="message" placeholder="Your Message" style="height: 150px" required></textarea>
+                  <label for="message">Your Message</label>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-custom w-100 py-3">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Contact Info -->
+      <div class="col-lg-5 col-md-8">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body p-4 p-lg-5">
+            <div class="contact-info text-center text-md-start">
+              <div class="mb-5">
+                <h4 class="mb-4 text-blue">Direct Contact</h4>
+                <div class="d-flex align-items-center ">
+                  <div>
+                    <p><b class="text-secondary">Email - </b><a class="text-secondary" href="mailto:kaunghtutp@gmail.com">kaunghtutp@gmail.com</a></p>
+                  </div>
+                </div>
+                
+                <div class="d-flex align-items-center">
+                  <div>
+                    <p><b class="text-secondary">Phone - </b><a class="text-secondary" >09758706113</a></p>
+                  </div>
+                </div>
+
+                <div class="d-flex align-items-center mb-3">
+                  <div>
+                    <p><b class="text-secondary">Github - </b><a class="text-secondary" href="https://github.com/Yohohoho6" >github.com/Yohohoho6</a></p>
+                  </div>
+                </div>
+                
+                </div>
+              </div>
+              
+              <div>
+                <h4 class="mb-4 text-blue">Availability</h4>
+                <p class="mb-1"><i class="bi bi-clock text-primary me-2"></i> Monday - Friday: 9AM - 5PM</p>
+                <p><i class="bi bi-clock text-primary me-2"></i> Response time: Within 24 hours</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    &copy; 2025 Kaung Htut. All rights reserved.
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const navbar = document.querySelector('.navbar');
+    
+    // Initialize navbar state based on screen size
+    if (window.innerWidth > 992) {
+      navbar.classList.add('show');
+    }
+    
+    // Navbar animation for mobile toggle
+    const navbarToggler = document.querySelector('.navbar-toggler');
+    const navbarCollapse = document.querySelector('.navbar-collapse');
+    
+    navbarToggler.addEventListener('click', function() {
+      if (navbarCollapse.classList.contains('show')) {
+        navbar.classList.add('show');
+      }
+    });
+    
+    // Handle Bootstrap collapse events
+    navbarCollapse.addEventListener('show.bs.collapse', function() {
+      navbar.classList.add('show');
+    });
+    
+    navbarCollapse.addEventListener('hidden.bs.collapse', function() {
+      if (window.innerWidth <= 992) {
+        navbar.classList.remove('show');
+      }
+    });
+    
+    // Scroll animation for navbar
+    window.addEventListener("scroll", function() {
+      navbar.classList.toggle("scrolled", window.scrollY > 20);
+    });
+    
+    // Progress bars animation
+    const bars = document.querySelectorAll(".progress-bar");
+    bars.forEach(bar => {
+      const width = bar.getAttribute("data-width");
+      // Delay the animation slightly to ensure it's visible
+      setTimeout(() => {
+        bar.style.width = width;
+      }, 100);
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 992) {
+        navbar.classList.add('show');
+      } else if (!navbarCollapse.classList.contains('show')) {
+        navbar.classList.remove('show');
+      }
+    });
+  });
+</script>
+</body>
+</html>
